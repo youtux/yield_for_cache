@@ -89,7 +89,6 @@ def test_propagates_exception_before_key():
     @yield_for_cache.yield_for_cache(get_or_create)
     def under_test():
         raise exception
-        yield 'a cache key'
 
     with pytest.raises(ValueError) as e:
         under_test()
@@ -125,4 +124,4 @@ def test_execution_stops_after_second_yield(cache, get_or_create):
     assert under_test() == 'ok'
 
     assert cache.get('a cache key') == 'ok'
-    assert len(empty_list) == 0
+    assert not empty_list
